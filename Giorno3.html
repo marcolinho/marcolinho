@@ -4,104 +4,122 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Giorno 3 - Schiena e Bicipiti</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
     <style>
         body {
-            font-family: 'Poppins', sans-serif;
+            font-family: Arial, sans-serif;
             text-align: center;
-            background-color: #f8f9fa;
-            color: #333;
-            margin: 0;
-            padding: 20px;
+            background-color: #f4f4f4;
         }
-
         .container {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 20px;
-            padding: 20px;
-            max-width: 1000px;
+            max-width: 600px;
             margin: auto;
-        }
-
-        .exercise {
+            padding: 20px;
             background: white;
-            padding: 15px;
             border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            text-align: center;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
         }
-
+        .exercise {
+            margin: 15px 0;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            background: #fafafa;
+        }
         .exercise img {
             width: 100%;
+            max-width: 300px;
             border-radius: 10px;
         }
-
-        .exercise input {
-            width: 90%;
+        input {
+            display: block;
+            width: 80%;
+            margin: 10px auto;
             padding: 8px;
-            margin-top: 10px;
-            border: 1px solid #ddd;
+            border: 1px solid #ccc;
             border-radius: 5px;
-            text-align: center;
         }
-
-        .btn {
+        button {
             background: #ff5733;
             color: white;
-            padding: 10px 15px;
-            font-size: 16px;
-            text-decoration: none;
-            border-radius: 5px;
+            border: none;
+            padding: 10px 20px;
+            font-size: 18px;
             cursor: pointer;
             margin-top: 10px;
-            border: none;
+            border-radius: 5px;
         }
-
-        .btn:hover {
+        button:hover {
             background: #e04d2b;
         }
-
-        .reset-btn {
-            background: #555;
-        }
-
-        .reset-btn:hover {
-            background: #444;
+        #timer {
+            font-size: 24px;
+            font-weight: bold;
+            color: #ff5733;
+            margin-top: 15px;
         }
     </style>
 </head>
 <body>
-    <h1>Giorno 3 - Schiena e Bicipiti</h1>
-    
+
     <div class="container">
+        <h1>Giorno 3 - Schiena e Bicipiti</h1>
+
         <div class="exercise">
+            <h3>Lat Machine</h3>
             <img src="img/Lat.jpg" alt="Lat Machine">
             <p>4x6</p>
             <input type="text" placeholder="Carico usato (kg)" id="lat">
         </div>
 
         <div class="exercise">
+            <h3>Low Row</h3>
             <img src="img/LowRow.jpg" alt="Low Row">
             <p>4x8</p>
             <input type="text" placeholder="Carico usato (kg)" id="lowrow">
         </div>
 
         <div class="exercise">
+            <h3>Pull Down</h3>
             <img src="img/PullDown.jpg" alt="Pull Down">
             <p>15-12-10</p>
             <input type="text" placeholder="Carico usato (kg)" id="pulldown">
         </div>
 
         <div class="exercise">
+            <h3>Trazioni</h3>
             <img src="img/Trazioni.jpg" alt="Trazioni">
-            <p>3xMax</p>
+            <p>3xmax</p>
             <input type="text" placeholder="Ripetizioni" id="trazioni">
         </div>
-    </div>
 
-    <button class="btn" onclick="salvaProgressi()">Salva Progressi</button>
-    <button class="btn reset-btn" onclick="resetProgressi()">Cancella Progressi</button>
+        <div class="exercise">
+            <h3>Aperture Peck Back</h3>
+            <img src="img/AperturePeckBack.jpg" alt="Aperture Peck Back">
+            <p>3x15</p>
+            <input type="text" placeholder="Carico usato (kg)" id="aperturePeckBack">
+        </div>
+
+        <div class="exercise">
+            <h3>Curl con bilanciere</h3>
+            <img src="img/Curl.jpg" alt="Curl con bilanciere">
+            <p>3x12</p>
+            <input type="text" placeholder="Carico usato (kg)" id="curl">
+        </div>
+
+        <div class="exercise">
+            <h3>Curl Alternato Seduto</h3>
+            <img src="img/CurlAlternatoSeduto.jpg" alt="Curl Alternato Seduto">
+            <p>3x10-12</p>
+            <input type="text" placeholder="Carico usato (kg)" id="curlAlternatoSeduto">
+        </div>
+
+        <button onclick="salvaProgressi()">💾 Salva Progressi</button>
+        <button onclick="eliminaProgressi()">❌ Elimina Progressi</button>
+        <button onclick="startTimer(60)">⏳ Avvia Timer (1 min)</button>
+        <p id="timer">00:00</p>
+        
+        <button onclick="window.location.href='index.html'">🏠 Torna alla Home</button>
+    </div>
 
     <script>
         document.addEventListener("DOMContentLoaded", function () {
@@ -109,6 +127,9 @@
             document.getElementById("lowrow").value = localStorage.getItem("lowrow") || "";
             document.getElementById("pulldown").value = localStorage.getItem("pulldown") || "";
             document.getElementById("trazioni").value = localStorage.getItem("trazioni") || "";
+            document.getElementById("aperturePeckBack").value = localStorage.getItem("aperturePeckBack") || "";
+            document.getElementById("curl").value = localStorage.getItem("curl") || "";
+            document.getElementById("curlAlternatoSeduto").value = localStorage.getItem("curlAlternatoSeduto") || "";
         });
 
         function salvaProgressi() {
@@ -116,19 +137,53 @@
             localStorage.setItem("lowrow", document.getElementById("lowrow").value);
             localStorage.setItem("pulldown", document.getElementById("pulldown").value);
             localStorage.setItem("trazioni", document.getElementById("trazioni").value);
+            localStorage.setItem("aperturePeckBack", document.getElementById("aperturePeckBack").value);
+            localStorage.setItem("curl", document.getElementById("curl").value);
+            localStorage.setItem("curlAlternatoSeduto", document.getElementById("curlAlternatoSeduto").value);
             alert("Progressi salvati con successo! 💪");
         }
 
-        function resetProgressi() {
+        function eliminaProgressi() {
             localStorage.removeItem("lat");
             localStorage.removeItem("lowrow");
             localStorage.removeItem("pulldown");
             localStorage.removeItem("trazioni");
+            localStorage.removeItem("aperturePeckBack");
+            localStorage.removeItem("curl");
+            localStorage.removeItem("curlAlternatoSeduto");
+
+            // Resetta i campi input
             document.getElementById("lat").value = "";
             document.getElementById("lowrow").value = "";
             document.getElementById("pulldown").value = "";
             document.getElementById("trazioni").value = "";
-            alert("Progressi cancellati.");
+            document.getElementById("aperturePeckBack").value = "";
+            document.getElementById("curl").value = "";
+            document.getElementById("curlAlternatoSeduto").value = "";
+
+            alert("Progressi eliminati con successo! 🔥");
+        }
+
+        function startTimer(seconds) {
+            let timerDisplay = document.getElementById("timer");
+            let countdown = seconds;
+
+            function updateDisplay() {
+                let minutes = Math.floor(countdown / 60);
+                let seconds = countdown % 60;
+                timerDisplay.textContent = `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+            }
+
+            updateDisplay(); 
+            let timerInterval = setInterval(() => {
+                if (countdown > 0) {
+                    countdown--;
+                    updateDisplay();
+                } else {
+                    clearInterval(timerInterval);
+                    timerDisplay.textContent = "⏳ Recupero finito!";
+                }
+            }, 1000);
         }
     </script>
 
