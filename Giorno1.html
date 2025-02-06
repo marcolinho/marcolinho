@@ -4,65 +4,58 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Giorno 3 - Gambe e Spalle</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
-    <style>
+      <style>
         body {
-            font-family: 'Poppins', sans-serif;
+            font-family: Arial, sans-serif;
             text-align: center;
-            background-color: #f8f9fa;
-            color: #333;
-            margin: 0;
-            padding: 20px;
+            background-color: #f4f4f4;
         }
-
-        h1 {
-            color: #ff5733;
-        }
-
         .container {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 20px;
-            margin-top: 20px;
-        }
-
-        .exercise {
+            max-width: 600px;
+            margin: auto;
+            padding: 20px;
             background: white;
-            padding: 15px;
             border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            text-align: center;
-            width: 300px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
         }
-
+        .exercise {
+            margin: 15px 0;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            background: #fafafa;
+        }
         .exercise img {
             width: 100%;
+            max-width: 300px;
             border-radius: 10px;
         }
-
-        .exercise p {
-            font-size: 18px;
-            font-weight: bold;
-            color: #555;
+        input {
+            display: block;
+            width: 80%;
+            margin: 10px auto;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
         }
-
-        .btn {
-            display: inline-block;
+        button {
             background: #ff5733;
             color: white;
-            padding: 12px 20px;
-            font-size: 16px;
-            text-decoration: none;
-            border-radius: 5px;
-            margin-top: 20px;
-            transition: 0.3s;
             border: none;
+            padding: 10px 20px;
+            font-size: 18px;
             cursor: pointer;
+            margin-top: 10px;
+            border-radius: 5px;
         }
-
-        .btn:hover {
+        button:hover {
             background: #e04d2b;
+        }
+        #timer {
+            font-size: 24px;
+            font-weight: bold;
+            color: #ff5733;
+            margin-top: 15px;
         }
     </style>
 </head>
@@ -73,39 +66,126 @@
         <div class="exercise">
             <img src="img/distensionipancapiana.jpg" alt="Panca Piana">
             <p>4x6</p>
+            <input type="number" placeholder="Carico usato (kg)" id="pancapiana">
         </div>
 
         <div class="exercise">
             <img src="img/PeckMachine.jpg" alt="Peck Machine">
             <p>3x12-15</p>
+            <input type="number" placeholder="Carico usato (kg)" id="peckmachine">
         </div>
 
         <div class="exercise">
             <img src="img/spalleManubri.jpg" alt="Spalle Manubri">
             <p>4x6</p>
+            <input type="number" placeholder="Carico usato (kg)" id="spallemanubri">
         </div>
 
         <div class="exercise">
             <img src="img/alzateLaterali.jpg" alt="Alzate Laterali">
             <p>4x8-10</p>
-        </div>
+            <input type="number" placeholder="Carico usato (kg)" id="alzatelaterali">
+            </div>
 
         <div class="exercise">
             <img src="img/tricipitiPancaPiana.jpg" alt="Tricipiti Panca Piana">
             <p>3x10-12</p>
+            <input type="number" placeholder="Carico usato (kg)" id="tricipitipancapiana">
         </div>
 
         <div class="exercise">
             <img src="img/tricipitiMacchinario.jpg" alt="Tricipiti Macchinario">
             <p>3x10-12</p>
+            <input type="number" placeholder="Carico usato (kg)" id="tricipitimacchinario">
         </div>
 
         <div class="exercise">
             <img src="img/crunch.jpg" alt="Crunch">
             <p>3xMax</p>
+            <input type="number" placeholder="Carico usato (kg)" id="crunch">
         </div>
+   
+
+        <button onclick="salvaProgressi()">💾 Salva Progressi</button>
+        <button onclick="eliminaProgressi()">❌ Elimina Progressi</button>
+        <button onclick="startTimer(60)">⏳ Avvia Timer (1 min)</button>
+        <p id="timer">00:00</p>
+        <button onclick="window.location.href='index.html'">🏠 Torna alla Home</button>
     </div>
 
-    <button class="btn" onclick="window.location.href='index.html'">Torna alla Home</button>
+
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            document.getElementById("pancapiana").value = localStorage.getItem("pancapiana") || "";
+            document.getElementById("peckmachine").value = localStorage.getItem("peckmachine") || "";
+            document.getElementById("spallemanubri").value = localStorage.getItem("spallemanubri") || "";
+            document.getElementById("alzatelaterali").value = localStorage.getItem("alzatelaterali") || "";
+            document.getElementById("tricipitipancapiana").value = localStorage.getItem("tricipitipancapiana") || "";
+            document.getElementById("tricipitimacchinario").value = localStorage.getItem("tricipitimacchinario") || "";
+            document.getElementById("crunch").value = localStorage.getItem("crunch") || "";
+        });
+
+        function salvaProgressi() {
+            localStorage.setItem("pancapiana", document.getElementById("pancapiana").value);
+            localStorage.setItem("peckmachine", document.getElementById("peckmachine").value);
+            localStorage.setItem("spallemanubri", document.getElementById("spallemanubri").value);
+            localStorage.setItem("alzatelaterali", document.getElementById("alzatelaterali").value);
+            localStorage.setItem("tricipitipancapiana", document.getElementById("tricipitipancapiana").value);
+            localStorage.setItem("tricipitimacchinario", document.getElementById("tricipitimacchinario").value);
+            localStorage.setItem("crunch", document.getElementById("crunch").value);
+            alert("Progressi salvati con successo! 💪");
+        }
+
+        function eliminaProgressi() {
+            localStorage.removeItem("pancapiana");
+            localStorage.removeItem("peckmachine");
+            localStorage.removeItem("spallemanubri");
+            localStorage.removeItem("alzatelaterali");
+            localStorage.removeItem("tricipitipancapiana");
+            localStorage.removeItem("tricipitimacchinario");
+            localStorage.removeItem("crunch");
+
+            // Resetta i campi input
+            document.getElementById("pancapiana").value = "";
+            document.getElementById("peckmachine").value = "";
+            document.getElementById("spallemanubri").value = "";
+            document.getElementById("alzatelaterali").value = "";
+            document.getElementById("tricipitipancapiana").value = "";
+            document.getElementById("tricipitimacchinario").value = "";
+            document.getElementById("crunch").value = "";
+
+            alert("Progressi eliminati con successo! 🔥");
+        }
+
+        function startTimer(seconds) {
+            let timerDisplay = document.getElementById("timer");
+            let countdown = seconds;
+
+            function updateDisplay() {
+                let minutes = Math.floor(countdown / 60);
+                let seconds = countdown % 60;
+                timerDisplay.textContent = `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+            }
+
+            updateDisplay(); 
+            let timerInterval = setInterval(() => {
+                if (countdown > 0) {
+                    countdown--;
+                    updateDisplay();
+                } else {
+                    clearInterval(timerInterval);
+                    timerDisplay.textContent = "⏳ Recupero finito!";
+                }
+            }, 1000);
+        }
+    </script>
+
+
+
+
+
+
+
 </body>
 </html>
