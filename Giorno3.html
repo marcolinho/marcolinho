@@ -15,16 +15,13 @@
             padding: 20px;
         }
 
-        h1 {
-            color: #ff5733;
-        }
-
         .container {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
             gap: 20px;
-            margin-top: 20px;
+            padding: 20px;
+            max-width: 1000px;
+            margin: auto;
         }
 
         .exercise {
@@ -33,7 +30,6 @@
             border-radius: 10px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             text-align: center;
-            width: 300px;
         }
 
         .exercise img {
@@ -41,28 +37,37 @@
             border-radius: 10px;
         }
 
-        .exercise p {
-            font-size: 18px;
-            font-weight: bold;
-            color: #555;
+        .exercise input {
+            width: 90%;
+            padding: 8px;
+            margin-top: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            text-align: center;
         }
 
         .btn {
-            display: inline-block;
             background: #ff5733;
             color: white;
-            padding: 12px 20px;
+            padding: 10px 15px;
             font-size: 16px;
             text-decoration: none;
             border-radius: 5px;
-            margin-top: 20px;
-            transition: 0.3s;
-            border: none;
             cursor: pointer;
+            margin-top: 10px;
+            border: none;
         }
 
         .btn:hover {
             background: #e04d2b;
+        }
+
+        .reset-btn {
+            background: #555;
+        }
+
+        .reset-btn:hover {
+            background: #444;
         }
     </style>
 </head>
@@ -73,39 +78,59 @@
         <div class="exercise">
             <img src="img/Lat.jpg" alt="Lat Machine">
             <p>4x6</p>
+            <input type="text" placeholder="Carico usato (kg)" id="lat">
         </div>
 
         <div class="exercise">
             <img src="img/LowRow.jpg" alt="Low Row">
             <p>4x8</p>
+            <input type="text" placeholder="Carico usato (kg)" id="lowrow">
         </div>
 
         <div class="exercise">
             <img src="img/PullDown.jpg" alt="Pull Down">
             <p>15-12-10</p>
+            <input type="text" placeholder="Carico usato (kg)" id="pulldown">
         </div>
 
         <div class="exercise">
             <img src="img/Trazioni.jpg" alt="Trazioni">
             <p>3xMax</p>
-        </div>
-
-        <div class="exercise">
-            <img src="img/AperturePeckBack.jpg" alt="Aperture Peck Back">
-            <p>3x15</p>
-        </div>
-
-        <div class="exercise">
-            <img src="img/Curl.jpg" alt="Curl">
-            <p>3x12</p>
-        </div>
-
-        <div class="exercise">
-            <img src="img/CurlAlternatoSeduto.jpg" alt="Curl Alternato Seduto">
-            <p>3x10-12</p>
+            <input type="text" placeholder="Ripetizioni" id="trazioni">
         </div>
     </div>
 
-    <button class="btn" onclick="window.location.href='index.html'">Torna alla Home</button>
+    <button class="btn" onclick="salvaProgressi()">Salva Progressi</button>
+    <button class="btn reset-btn" onclick="resetProgressi()">Cancella Progressi</button>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            document.getElementById("lat").value = localStorage.getItem("lat") || "";
+            document.getElementById("lowrow").value = localStorage.getItem("lowrow") || "";
+            document.getElementById("pulldown").value = localStorage.getItem("pulldown") || "";
+            document.getElementById("trazioni").value = localStorage.getItem("trazioni") || "";
+        });
+
+        function salvaProgressi() {
+            localStorage.setItem("lat", document.getElementById("lat").value);
+            localStorage.setItem("lowrow", document.getElementById("lowrow").value);
+            localStorage.setItem("pulldown", document.getElementById("pulldown").value);
+            localStorage.setItem("trazioni", document.getElementById("trazioni").value);
+            alert("Progressi salvati con successo! 💪");
+        }
+
+        function resetProgressi() {
+            localStorage.removeItem("lat");
+            localStorage.removeItem("lowrow");
+            localStorage.removeItem("pulldown");
+            localStorage.removeItem("trazioni");
+            document.getElementById("lat").value = "";
+            document.getElementById("lowrow").value = "";
+            document.getElementById("pulldown").value = "";
+            document.getElementById("trazioni").value = "";
+            alert("Progressi cancellati.");
+        }
+    </script>
+
 </body>
 </html>
